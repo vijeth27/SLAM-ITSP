@@ -4,7 +4,7 @@ import time
 GPIO.setmode(GPIO.BCM)
 motor1_pins = [4, 17, 23, 24]
 motor2_pins = [9, 10, 13, 19]
-delay = 10
+delay = 25
 steps_forward = 47
 steps_turn = 38
 
