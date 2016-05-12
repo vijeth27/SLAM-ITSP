@@ -167,13 +167,11 @@ def move_motor(possible_heading_direction, bot_coordinates, bot_absolute_locatio
     if 'L' in possible_heading_direction:
         print "LEFT"
         Rpi_stepper.move_left()
-        Rpi_stepper.move_forward()
         bot_coordinates[2] = (bot_coordinates[2] - 1) % 4
         update_bot_location(bot_coordinates, bot_absolute_location)
     elif 'R' in possible_heading_direction:
         print "RIGHT"
         Rpi_stepper.move_right()
-        Rpi_stepper.move_forward()
         bot_coordinates[2] = (bot_coordinates[2] + 1) % 4
         update_bot_location(bot_coordinates, bot_absolute_location)
     elif 'F' in possible_heading_direction:

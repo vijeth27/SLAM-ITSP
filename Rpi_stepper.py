@@ -4,9 +4,9 @@ import time
 GPIO.setmode(GPIO.BCM)
 motor1_pins = [4, 17, 23, 24]
 motor2_pins = [9, 10, 13, 19]
-delay = 30
-steps_forward = 47
-steps_turn = 50
+delay = 20
+steps_forward = 45
+steps_turn = 40
 
 try:
 
@@ -15,14 +15,26 @@ try:
             setStep(1, [1, 0, 0, 0])
             setStep(2, [0, 0, 0, 1])
             time.sleep(delay)
+            setStep(1, [1, 0, 1, 0])
+            setStep(2, [0, 1, 0, 1])
+            time.sleep(delay)
             setStep(1, [0, 0, 1, 0])
             setStep(2, [0, 1, 0, 0])
+            time.sleep(delay)
+            setStep(1, [0, 1, 1, 0])
+            setStep(2, [0, 1, 1, 0])
             time.sleep(delay)
             setStep(1, [0, 1, 0, 0])
             setStep(2, [0, 0, 1, 0])
             time.sleep(delay)
+            setStep(1, [0, 1, 0, 1])
+            setStep(2, [1, 0, 1, 0])
+            time.sleep(delay)
             setStep(1, [0, 0, 0, 1])
             setStep(2, [1, 0, 0, 0])
+            time.sleep(delay)
+            setStep(1, [1, 0, 0, 1])
+            setStep(2, [1, 0, 0, 1])
             time.sleep(delay)
 
     def backwards(delay, steps):
@@ -30,14 +42,26 @@ try:
             setStep(1, [1, 0, 0, 0])
             setStep(2, [0, 0, 0, 1])
             time.sleep(delay)
+            setStep(1, [1, 0, 1, 0])
+            setStep(2, [0, 1, 0, 1])
+            time.sleep(delay)
             setStep(1, [0, 0, 1, 0])
             setStep(2, [0, 1, 0, 0])
+            time.sleep(delay)
+            setStep(1, [0, 1, 1, 0])
+            setStep(2, [0, 1, 1, 0])
             time.sleep(delay)
             setStep(1, [0, 1, 0, 0])
             setStep(2, [0, 0, 1, 0])
             time.sleep(delay)
+            setStep(1, [0, 1, 0, 1])
+            setStep(2, [1, 0, 1, 0])
+            time.sleep(delay)
             setStep(1, [0, 0, 0, 1])
             setStep(2, [1, 0, 0, 0])
+            time.sleep(delay)
+            setStep(1, [1, 0, 0, 1])
+            setStep(2, [1, 0, 0, 1])
             time.sleep(delay)
 
     def left(delay, steps):
@@ -48,14 +72,26 @@ try:
             setStep(1, [1, 0, 0, 0])
             setStep(2, [1, 0, 0, 0])
             time.sleep(delay)
+            setStep(1, [1, 0, 1, 0])
+            setStep(2, [1, 0, 1, 0])
+            time.sleep(delay)
             setStep(1, [0, 0, 1, 0])
             setStep(2, [0, 0, 1, 0])
+            time.sleep(delay)
+            setStep(1, [0, 1, 1, 0])
+            setStep(2, [0, 1, 1, 0])
             time.sleep(delay)
             setStep(1, [0, 1, 0, 0])
             setStep(2, [0, 1, 0, 0])
             time.sleep(delay)
+            setStep(1, [0, 1, 0, 1])
+            setStep(2, [0, 1, 0, 1])
+            time.sleep(delay)
             setStep(1, [0, 0, 0, 1])
             setStep(2, [0, 0, 0, 1])
+            time.sleep(delay)
+            setStep(1, [1, 0, 0, 1])
+            setStep(2, [1, 0, 0, 1])
             time.sleep(delay)
 
     def right(delay, steps):
@@ -65,11 +101,23 @@ try:
             setStep(1, [0, 0, 0, 1])
             setStep(2, [0, 0, 0, 1])
             time.sleep(delay)
+            setStep(1, [0, 1, 0, 1])
+            setStep(2, [0, 1, 0, 1])
+            time.sleep(delay)
             setStep(1, [0, 1, 0, 0])
             setStep(2, [0, 1, 0, 0])
             time.sleep(delay)
+            setStep(1, [0, 1, 1, 0])
+            setStep(2, [0, 1, 1, 0])
+            time.sleep(delay)
             setStep(1, [0, 0, 1, 0])
             setStep(2, [0, 0, 1, 0])
+            time.sleep(delay)
+            setStep(1, [1, 0, 1, 0])
+            setStep(2, [1, 0, 1, 0])
+            time.sleep(delay)
+            setStep(1, [1, 0, 0, 0])
+            setStep(2, [1, 0, 0, 0])
             time.sleep(delay)
             setStep(1, [1, 0, 0, 1])
             setStep(2, [1, 0, 0, 1])
@@ -94,12 +142,16 @@ try:
         for pin in range(4):
             GPIO.setup(motor1_pins[pin], GPIO.OUT)
             GPIO.setup(motor2_pins[pin], GPIO.OUT)
+        forward(int(delay) / 1000.0, int(12))
         left(int(delay) / 1000.0, int(steps_turn))
+        forward(int(delay)/1000.0,int(35))
 
     def move_right():
         for pin in range(4):
             GPIO.setup(motor1_pins[pin], GPIO.OUT)
             GPIO.setup(motor2_pins[pin], GPIO.OUT)
+        forward(int(delay) / 1000.0, int(12))
         right(int(delay) / 1000.0, int(steps_turn))
+        forward(int(delay)/1000.0,int(35))
 except KeyboardInterrupt:
     GPIO.cleanup()

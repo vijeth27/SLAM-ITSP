@@ -41,16 +41,32 @@ def get_z_rotation(x,y,z):
     return math.degrees(radians)    
  
 bus = smbus.SMBus(1) # or bus = smbus.SMBus(1) for Revision 2 boards
-gyro_cummu=0
+gyro_cummu=0.0
 address = 0x68       # This is the address value read via the i2cdetect command
 count =0
 counter_offset=0
+corr=[]
+
 # Now wake the 6050 up as it starts in sleep mode
+print "Calibrating Sensors"
+for i in range(3):
+    j=0
+    while (j<48):
+        bus.write_byte_data(address, power_mgmt_1, 0)
+        gyro_yout = read_word_2c(0x45)
+        gyro_cummu=gyro_yout/115*0.07 + gyro_cummu
+        corr.append(gyro_cummu)
+        j+=1
+        time.sleep(0.07)
+       
+correction=(corr[47] + corr[95] + corr[143])/3 
+print correction
+
 while True:
     bus.write_byte_data(address, power_mgmt_1, 0)
-    gyro_xout = read_word_2c(0x43)
+#   gyro_xout = read_word_2c(0x43)
     gyro_yout = read_word_2c(0x45)
-    gyro_zout = read_word_2c(0x47)
+#   gyro_zout = read_word_2c(0x47)
 #  print  "gyro data "" x: ",(gyro_xout / 131)," y: ",(gyro_yout / 131)," z: ",(gyro_zout / 131)
         
     accel_xout = read_word_2c(0x3b)
@@ -61,9 +77,9 @@ while True:
     accel_yout_scaled = accel_yout / 16384.0
     accel_zout_scaled = accel_zout / 16384.0
     
-    gyro_cummu=gyro_zout/115*0.07 + gyro_cummu
+    gyro_cummu=gyro_yout/115*0.07 + gyro_cummu
 
-    z_rot=0.98*(gyro_cummu) + 0.02*get_z_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)
+    y_rot=0.98*(gyro_cummu) + 0.02*get_y_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)
     #print "gyro data "" x: ",(gyro_xout / 131)," y: ",(gyro_yout / 131)," z: ",(gyro_zout / 131), "accelerometer data "," x: ", (accel_xout / 16384.0)," y: ",(accel_yout / 16384.0)," z: ", (accel_zout / 16384.0)
     # print "x rotation: " , get_x_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)
     # print "y rotation: " , get_y_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)
@@ -73,7 +89,7 @@ while True:
     counter_offset=counter_offset+1
     if counter_offset == 48:
         counter_offset = 0
-        gyro_cummu=gyro_cummu-0.17
+        gyro_cummu=gyro_cummu-correction
     if count == 14:
         count = 0
-        print z_rot
+        print y_rot
