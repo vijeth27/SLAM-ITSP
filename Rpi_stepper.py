@@ -4,9 +4,9 @@ import time
 GPIO.setmode(GPIO.BCM)
 motor1_pins = [4, 17, 23, 24]
 motor2_pins = [9, 10, 13, 19]
-delay = 25
+delay = 30
 steps_forward = 47
-steps_turn = 38
+steps_turn = 50
 
 try:
 
@@ -45,34 +45,34 @@ try:
         motor2 = 2
 
         for i in range(0, steps):
-            setStep(motor1, [1, 0, 0, 0])
-            setStep(motor2, [1, 0, 0, 0])
+            setStep(1, [1, 0, 0, 0])
+            setStep(2, [1, 0, 0, 0])
             time.sleep(delay)
-            setStep(motor1, [0, 0, 1, 0])
-            setStep(motor2, [0, 0, 1, 0])
+            setStep(1, [0, 0, 1, 0])
+            setStep(2, [0, 0, 1, 0])
             time.sleep(delay)
-            setStep(motor1, [0, 1, 0, 0])
-            setStep(motor2, [0, 1, 0, 0])
+            setStep(1, [0, 1, 0, 0])
+            setStep(2, [0, 1, 0, 0])
             time.sleep(delay)
-            setStep(motor1, [0, 0, 0, 1])
-            setStep(motor2, [0, 0, 0, 1])
+            setStep(1, [0, 0, 0, 1])
+            setStep(2, [0, 0, 0, 1])
             time.sleep(delay)
 
     def right(delay, steps):
         motor1 = 1
         motor2 = 2
         for i in range(0, steps):
-            setStep(motor1, [0, 0, 0, 1])
-            setStep(motor2, [0, 0, 0, 1])
+            setStep(1, [0, 0, 0, 1])
+            setStep(2, [0, 0, 0, 1])
             time.sleep(delay)
-            setStep(motor1, [0, 1, 0, 0])
-            setStep(motor2, [0, 1, 0, 0])
+            setStep(1, [0, 1, 0, 0])
+            setStep(2, [0, 1, 0, 0])
             time.sleep(delay)
-            setStep(motor1, [0, 0, 1, 0])
-            setStep(motor2, [0, 0, 1, 0])
+            setStep(1, [0, 0, 1, 0])
+            setStep(2, [0, 0, 1, 0])
             time.sleep(delay)
-            setStep(motor1, [1, 0, 0, 1])
-            setStep(motor2, [1, 0, 0, 1])
+            setStep(1, [1, 0, 0, 1])
+            setStep(2, [1, 0, 0, 1])
             time.sleep(delay)
 
 
